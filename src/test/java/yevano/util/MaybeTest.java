@@ -7,14 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class MaybeTest {
     @Test
-    @ParameterizedTest
-    @ValueSource(ints = { 0, 1, 2, 3 })
-    public void matchTest(Object value) {
+    public void matchTest() {
+        int value = 0;
         Maybe.some(value)
             .ifSome(x -> assertEquals(value, x))
             .ifNone(() -> { throw new RuntimeException(); }
@@ -27,17 +24,15 @@ public class MaybeTest {
     }
 
     @Test
-    @ParameterizedTest
-    @ValueSource(ints = { 0, 1, 2, 3 })
-    public void optionalConvert(Object value) {
+    public void optionalConvert() {
+        int value = 0;
         assertEquals(Maybe.fromOptional(Optional.empty()), Maybe.none());
         assertEquals(Maybe.fromOptional(Optional.of(value)), Maybe.some(value));
     }
 
     @Test
-    @ParameterizedTest
-    @ValueSource(ints = { 0, 1, 2, 3 })
-    public void isSomeAndIsNone(Object value) {
+    public void isSomeAndIsNone() {
+        int value = 0;
         assertTrue(Maybe.some(value).isSome());
         assertFalse(Maybe.some(value).isNone());
         assertFalse(Maybe.none().isSome());

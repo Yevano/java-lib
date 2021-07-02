@@ -87,9 +87,25 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object> {
 
 
     default NBTBase serialize(Object value) {
+        if(value instanceof Boolean) return serialize((boolean) value);
+        if(value instanceof Byte) return serialize((byte) value);
+        if(value instanceof Short) return serialize((short) value);
+        if(value instanceof Integer) return serialize((int) value);
+        if(value instanceof Long) return serialize((long) value);
+        if(value instanceof Float) return serialize((float) value);
+        if(value instanceof Double) return serialize((double) value);
+        if(value instanceof byte[]) return serialize((byte[]) value);
+        if(value instanceof int[]) return serialize((int[]) value);
+        if(value instanceof List<?>) return serialize((List<?>) value);
+        if(value instanceof Map<?, ?>) return serialize((Map<?, ?>) value);
+
         throw new RuntimeException(
             String.format("No implementation for type %s", value.getClass().getName())
         );
+    }
+
+    default NBTTagByte serialize(boolean value) {
+        return serialize(value ? (byte) 1 : (byte) 0);
     }
 
     default NBTTagByte serialize(byte value) {
@@ -133,10 +149,10 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object> {
         return result;
     }
 
-    default NBTTagCompound serialize(Map<String, ?> value) {
+    default NBTTagCompound serialize(Map<?, ?> value) {
         NBTTagCompound tag = new NBTTagCompound();
         for(val kv : value.entrySet()) {
-            tag.set(kv.getKey(), serialize(kv.getValue()));
+            tag.set((String) kv.getKey(), serialize(kv.getValue()));
         }
         return tag;
     }

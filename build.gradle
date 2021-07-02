@@ -58,9 +58,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.2"
     compileOnly "net.pvpwars:spigot:1.0.1"
+    testImplementation "net.pvpwars:spigot:1.0.1"
 }
 
 test {
-    useJUnit()
-    maxHeapSize = "1G"
+    useJUnitPlatform()
 }
