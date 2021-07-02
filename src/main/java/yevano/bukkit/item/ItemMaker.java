@@ -40,6 +40,10 @@ public class ItemMaker {
         return new ItemMaker(amount, material, Optional.of(name), copy, attachments);
     }
 
+    public ItemMaker copy(ItemStack copy) {
+        return new ItemMaker(amount, material, name, Optional.of(new ItemStack(copy)), attachments);
+    }
+
     public ItemMaker attach(@NonNull String key, Object object) {
         val attachments = new HashMap<>(this.attachments);
         attachments.put(key, object);
@@ -48,12 +52,13 @@ public class ItemMaker {
 
     public ItemStack asItemStack() {
         val itemUtil = ItemUtil.get;
-        ItemStack itemStack = new ItemStack(material.orElse(Material.AIR), amount.orElse(1));
+        val itemStack = MutRef.of(new ItemStack(material.orElse(Material.AIR), amount.orElse(1)));
 
         MutRef<NBTTagCompound> tag = MutRef.empty();
 
         copy.ifPresent(copyItemStack -> {
             if(copyItemStack.hasItemMeta()) tag.set(itemUtil.getTag(copyItemStack).get());
+            itemStack.set(copyItemStack);
         });
 
         name.ifPresent(name -> {
@@ -68,6 +73,6 @@ public class ItemMaker {
             tag.get().set(kv.getKey(), itemUtil.serialize(kv.getValue()));
         }
 
-        return itemUtil.getItemStackWithNBT(itemStack, tag.get());
+        return itemUtil.getItemStackWithNBT(itemStack.get(), tag.get());
     }
 }
