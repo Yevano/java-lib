@@ -3,16 +3,21 @@ package yevano.resource;
 import java.io.Closeable;
 import java.io.IOException;
 
-public class CloseableResourceWrapper extends Resource {
+import lombok.NonNull;
+
+public class CloseableResourceWrapper extends Destructor {
+    public static CloseableResourceWrapper of(@NonNull Closeable closeable) {
+        return new CloseableResourceWrapper(closeable);
+    }
+
     private Closeable closeable;
 
-    public CloseableResourceWrapper(Closeable closeable) {
-        super();
+    CloseableResourceWrapper(Closeable closeable) {
         this.closeable = closeable;
     }
 
     @Override
-    public void destroy() throws ResourceCloseException {
+    void destroy(Destructor r) throws ResourceCloseException {
         try {
             this.closeable.close();
         } catch (IOException e) {

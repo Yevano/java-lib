@@ -3,16 +3,15 @@ package yevano.bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import yevano.resource.Resource;
-import yevano.resource.ResourceCloseException;
-import yevano.resource.ResourceCollector;
+import yevano.resource.ResourceStack;
 
 public abstract class ResourcePlugin extends JavaPlugin {
-    private Resource resource;
+    private final ResourceStack resourceStack = new ResourceStack();
 
     @Override
     public final void onEnable() {
         super.onEnable();
-        this.resource = ResourceCollector.of(this::destroy, this.init());
+        this.init();
     }
 
     @Override
@@ -20,10 +19,12 @@ public abstract class ResourcePlugin extends JavaPlugin {
         super.onDisable();
 
         try {
-            resource.close();
-        } catch (ResourceCloseException e) {
+            this.destroy();
+        } catch(Exception e) {
             e.printStackTrace();
         }
+
+        resourceStack.close();
     }
 
     public abstract Resource init();

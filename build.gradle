@@ -18,15 +18,15 @@ javadoc {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 
     maven {
-        url = uri("https://maven.pkg.github.com/pvpwars-org/spigot")
-        name = "GitHubPackages"
-        credentials {
-            username = property("GITHUB_USERNAME")
-            password = property("GITHUB_TOKEN")
-        }
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
+    }
+
+    maven {
+        url = "https://hub.spigotmc.org/nexus/content/repositories/sonatype-nexus-snapshots/"
     }
 }
 
@@ -36,19 +36,7 @@ publishing {
             groupId = property("groupId")
             artifactId = property("artifactId")
             version = property("version")
-
             from components.java
-        }
-    }
-
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/pvpwars-org/${property("artifactId")}")
-            credentials {
-                username = property("GITHUB_USERNAME")
-                password = property("GITHUB_TOKEN")
-            }
         }
     }
 }
