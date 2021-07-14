@@ -2,10 +2,31 @@ package yevano.util;
 
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import lombok.NonNull;
 
 public class Maybe<A> {
+    public static final Context context = new Context() { };
+
+    public interface Context {
+        public default <A> Maybe<A> some(@NonNull A value) {
+            return Maybe.some(value);
+        }
+
+        public default <A> Maybe<A> someUnlessNull(A value) {
+            return someUnlessNull(value);
+        }
+
+        public default <A> Maybe<A> none() {
+            return Maybe.none();
+        }
+
+        public default <A> Maybe<A> fromOptional(@NonNull Optional<A> optional) {
+            return Maybe.fromOptional(optional);
+        }
+    }
+
     private static final Maybe<?> NONE = new Maybe<>(null);
 
     @SuppressWarnings("unchecked")
@@ -17,7 +38,7 @@ public class Maybe<A> {
         return new Maybe<>(value);
     }
 
-    public static <A> Maybe<A> someNullable(A value) {
+    public static <A> Maybe<A> someUnlessNull(A value) {
         return new Maybe<>(value);
     }
 
@@ -42,6 +63,11 @@ public class Maybe<A> {
         return f.apply(value);
     }
 
+    public Maybe<A> filter(@NonNull Fun<A, Boolean> f) {
+        if(value != null && f.apply(value)) return this;
+        return none();
+    }
+
     public Maybe<A> ifSome(@NonNull Consumer<A> f) {
         if(value != null) f.accept(value);
         return this;
@@ -50,6 +76,24 @@ public class Maybe<A> {
     public Maybe<A> ifNone(@NonNull Runnable f) {
         if(value == null) f.run();
         return this;
+    }
+
+    public A defaultTo(@NonNull Supplier<A> f) {
+        return value != null ? value : f.get();
+    }
+
+    public Maybe<A> defaultMap(@NonNull Supplier<A> f) {
+        return value != null ? this : some(f.get());
+    }
+
+    public A getOrThrow(Supplier<? extends RuntimeException> supplier) {
+        if(value == null) throw supplier.get();
+        return value;
+    }
+
+    public A getOrDo(Runnable runnable) {
+        if(value == null) runnable.run();
+        return value;
     }
 
     public boolean isSome() {
