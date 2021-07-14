@@ -14,12 +14,12 @@ import lombok.val;
 public abstract class ResourceOwner extends Destructor {
     private Stack<Resource> resources = new Stack<>();
 
-    protected void pushResource(@NonNull Resource resource) {
-        resources.push(resource);
+    protected Resource pushResource(@NonNull Resource resource) {
+        return resources.push(resource);
     }
 
-    protected void pushResource(@NonNull Closeable closeable) {
-        resources.push(CloseableResourceWrapper.of(closeable));
+    protected Resource pushResource(@NonNull Closeable closeable) {
+        return resources.push(CloseableResourceWrapper.of(closeable));
     }
 
     protected <A> void defer(@NonNull Consumer<A> f, A x) {
