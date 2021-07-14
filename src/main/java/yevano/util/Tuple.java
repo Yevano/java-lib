@@ -45,11 +45,11 @@ public class Tuple {
 
 
     public static class Of2<T1, T2> {
-        interface F<T1, T2, R> {
+        public interface F<T1, T2, R> {
             public R apply(T1 t1, T2 t2);
         }
 
-        interface VF<T1, T2> {
+        public interface VF<T1, T2> {
             public void apply(T1 t1, T2 t2);
         }
 
@@ -82,11 +82,11 @@ public class Tuple {
     }
 
     public static class Of3<T1, T2, T3> {
-        interface F<T1, T2, T3, R> {
+        public interface F<T1, T2, T3, R> {
             public R apply(T1 t1, T2 t2, T3 t3);
         }
 
-        interface VF<T1, T2, T3> {
+        public interface VF<T1, T2, T3> {
             public void apply(T1 t1, T2 t2, T3 t3);
         }
 
@@ -123,11 +123,11 @@ public class Tuple {
     }
 
     public static class Of4<T1, T2, T3, T4> {
-        interface F<T1, T2, T3, T4, R> {
+        public interface F<T1, T2, T3, T4, R> {
             public R apply(T1 t1, T2 t2, T3 t3, T4 t4);
         }
 
-        interface VF<T1, T2, T3, T4> {
+        public interface VF<T1, T2, T3, T4> {
             public void apply(T1 t1, T2 t2, T3 t3, T4 t4);
         }
 
@@ -168,11 +168,11 @@ public class Tuple {
     }
 
     public static class Of5<T1, T2, T3, T4, T5> {
-        interface F<T1, T2, T3, T4, T5, R> {
+        public interface F<T1, T2, T3, T4, T5, R> {
             public R apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5);
         }
 
-        interface VF<T1, T2, T3, T4, T5> {
+        public interface VF<T1, T2, T3, T4, T5> {
             public void apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5);
         }
 
@@ -217,11 +217,11 @@ public class Tuple {
     }
 
     public static class Of6<T1, T2, T3, T4, T5, T6> {
-        interface F<T1, T2, T3, T4, T5, T6, R> {
+        public interface F<T1, T2, T3, T4, T5, T6, R> {
             public R apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
         }
 
-        interface VF<T1, T2, T3, T4, T5, T6> {
+        public interface VF<T1, T2, T3, T4, T5, T6> {
             public void apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
         }
 
@@ -270,11 +270,11 @@ public class Tuple {
     }
 
     public static class Of7<T1, T2, T3, T4, T5, T6, T7> {
-        interface F<T1, T2, T3, T4, T5, T6, T7, R> {
+        public interface F<T1, T2, T3, T4, T5, T6, T7, R> {
             public R apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7);
         }
 
-        interface VF<T1, T2, T3, T4, T5, T6, T7> {
+        public interface VF<T1, T2, T3, T4, T5, T6, T7> {
             public void apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7);
         }
 
@@ -327,11 +327,11 @@ public class Tuple {
     }
 
     public static class Of8<T1, T2, T3, T4, T5, T6, T7, T8> {
-        interface F<T1, T2, T3, T4, T5, T6, T7, T8, R> {
+        public interface F<T1, T2, T3, T4, T5, T6, T7, T8, R> {
             public R apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8);
         }
 
-        interface VF<T1, T2, T3, T4, T5, T6, T7, T8> {
+        public interface VF<T1, T2, T3, T4, T5, T6, T7, T8> {
             public void apply(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8);
         }
 
