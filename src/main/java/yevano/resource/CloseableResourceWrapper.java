@@ -17,7 +17,7 @@ public class CloseableResourceWrapper extends Destructor {
     }
 
     @Override
-    void destroy(Destructor r) throws ResourceCloseException {
+    protected void destroy(Destructor r) throws ResourceCloseException {
         try {
             this.closeable.close();
         } catch (IOException e) {

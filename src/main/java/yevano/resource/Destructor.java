@@ -1,7 +1,7 @@
 package yevano.resource;
 
 public abstract class Destructor implements Resource {
-    abstract void destroy(Destructor resource);
+    protected abstract void destroy(Destructor resource);
 
     public final void close() {
         try {

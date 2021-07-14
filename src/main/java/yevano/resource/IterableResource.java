@@ -15,7 +15,7 @@ public class IterableResource<T extends Resource> extends Destructor {
     }
 
     @Override
-    final void destroy(Destructor $) {
+    protected final void destroy(Destructor $) {
         for(val e : iterable) {
             e.close();
         }

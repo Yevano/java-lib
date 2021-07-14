@@ -14,8 +14,4 @@ public class ResourceStack extends ResourceOwner {
     protected <A> void defer(@NonNull Consumer<A> f, A x) {
         super.defer(f, x);
     }
-
-    
-
-    @Override void destroy(ResourceOwner resourceOwner) { }
 }

@@ -18,7 +18,7 @@ public class MapResource<T extends Resource> extends Destructor {
     }
 
     @Override
-    final void destroy(Destructor $) {
+    protected final void destroy(Destructor $) {
         for(val e : new ArrayList<>(map.values())) {
             e.close();
         }

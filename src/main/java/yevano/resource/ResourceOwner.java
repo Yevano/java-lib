@@ -28,16 +28,16 @@ public abstract class ResourceOwner extends Destructor {
 
     protected void defer(@NonNull Runnable runnable) {
         resources.add(new Destructor() {
-            void destroy(Destructor resource) {
+            protected void destroy(Destructor resource) {
                 runnable.run();
             }
         });
     }
 
-    abstract void destroy(ResourceOwner resourceOwner);
+    protected void destroy(ResourceOwner resourceOwner) { }
 
     @Override
-    final void destroy(Destructor $) {
+    protected final void destroy(Destructor $) {
         List<Exception> errors = new ArrayList<>();
 
         try {
