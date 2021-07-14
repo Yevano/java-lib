@@ -6,7 +6,7 @@ import lombok.NonNull;
 
 public class ResourceStack extends ResourceOwner {
     @Override
-    public Resource pushResource(@NonNull Resource resource) {
+    public <T extends Resource> T pushResource(@NonNull T resource) {
         return super.pushResource(resource);
     }
 
