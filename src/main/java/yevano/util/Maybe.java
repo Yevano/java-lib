@@ -15,7 +15,7 @@ public class Maybe<A> {
         }
 
         public default <A> Maybe<A> someUnlessNull(A value) {
-            return someUnlessNull(value);
+            return Maybe.someUnlessNull(value);
         }
 
         public default <A> Maybe<A> none() {
