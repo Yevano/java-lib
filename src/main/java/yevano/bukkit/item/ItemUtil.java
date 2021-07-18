@@ -25,14 +25,24 @@ import net.minecraft.server.v1_8_R3.NBTTagIntArray;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 import net.minecraft.server.v1_8_R3.NBTTagLong;
 import net.minecraft.server.v1_8_R3.NBTTagShort;
+import yevano.util.Format;
 
-public interface ItemUtil extends NBTSerial<NBTBase, Object> {
+public interface ItemUtil extends NBTSerial<NBTBase, Object>, Format.Context {
     public static final ItemUtil get = new ItemUtil() { };
 
-    default Object deserialize(NBTBase tag) {
-        throw new RuntimeException(
-            String.format("No implementation for type %s", tag.getClass().getName())
-        );
+    default Object deserialize(NBTBase tag) throws NBTSerialException {
+        if(tag instanceof NBTTagByte) return deserialize((NBTTagByte) tag);
+        if(tag instanceof NBTTagShort) return deserialize((NBTTagShort) tag);
+        if(tag instanceof NBTTagInt) return deserialize((NBTTagInt) tag);
+        if(tag instanceof NBTTagLong) return deserialize((NBTTagLong) tag);
+        if(tag instanceof NBTTagFloat) return deserialize((NBTTagFloat) tag);
+        if(tag instanceof NBTTagDouble) return deserialize((NBTTagDouble) tag);
+        if(tag instanceof NBTTagByteArray) return deserialize((NBTTagByteArray) tag);
+        if(tag instanceof NBTTagIntArray) return deserialize((NBTTagIntArray) tag);
+        if(tag instanceof NBTTagList) return deserialize((NBTTagList) tag);
+        if(tag instanceof NBTTagCompound) return deserialize((NBTTagCompound) tag);
+
+        throw new NBTSerialException(tag, Object.class);
     }
 
     default byte deserialize(NBTTagByte tag) {
@@ -67,26 +77,34 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object> {
         return tag.c();
     }
 
-    default List<?> deserialize(NBTTagList tag) {
+    default List<?> deserialize(NBTTagList tag) throws NBTSerialException {
         val size = tag.size();
         val result = Lists.newArrayListWithCapacity(size);
         for(int i = 0; i < size; i++) {
-            result.add(deserialize(tag.g(i)));
+            try {
+                result.add(deserialize(tag.g(i)));
+            } catch (NBTSerialException e) {
+                throw new NBTSerialException(tag, Map.class, stringf("Failed on index %s", i), e);
+            }
         }
         return result;
     }
 
-    default Map<String, ?> deserialize(NBTTagCompound tag) {
+    default Map<String, ?> deserialize(NBTTagCompound tag) throws NBTSerialException {
         Map<String, Object> result = Maps.newHashMap();
         for(val key : tag.c()) {
-            result.put(key, deserialize(tag.get(key)));
+            try {
+                result.put(key, deserialize(tag.get(key)));
+            } catch (NBTSerialException e) {
+                throw new NBTSerialException(tag, Map.class, stringf("Failed on key %s", key), e);
+            }
         }
         return result;
     }
 
 
 
-    default NBTBase serialize(Object value) {
+    default NBTBase serialize(Object value) throws NBTSerialException {
         if(value instanceof Boolean) return serialize((boolean) value);
         if(value instanceof Byte) return serialize((byte) value);
         if(value instanceof Short) return serialize((short) value);
@@ -99,9 +117,7 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object> {
         if(value instanceof List<?>) return serialize((List<?>) value);
         if(value instanceof Map<?, ?>) return serialize((Map<?, ?>) value);
 
-        throw new RuntimeException(
-            String.format("No implementation for type %s", value.getClass().getName())
-        );
+        throw new NBTSerialException(value, NBTBase.class);
     }
 
     default NBTTagByte serialize(boolean value) {
@@ -140,19 +156,32 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object> {
         return new NBTTagIntArray(Arrays.copyOf(value, value.length));
     }
 
-    default NBTTagList serialize(List<?> value) {
+    default NBTTagList serialize(List<?> value) throws NBTSerialException {
         val result = new NBTTagList();
-        for(val e : value) {
-            //result.add(serialize());
-            result.add(serialize(e));
+        for(int i = 0; i < value.size(); i++) {
+            val e = value.get(i);
+
+            try {
+                result.add(serialize(e));
+            } catch (NBTSerialException serialException) {
+                throw new NBTSerialException(value, NBTTagList.class,
+                    stringf("Failed on index %", i), serialException
+                );
+            }
         }
         return result;
     }
 
-    default NBTTagCompound serialize(Map<?, ?> value) {
+    default NBTTagCompound serialize(Map<?, ?> value) throws NBTSerialException {
         NBTTagCompound tag = new NBTTagCompound();
         for(val kv : value.entrySet()) {
-            tag.set((String) kv.getKey(), serialize(kv.getValue()));
+            try {
+                tag.set((String) kv.getKey(), serialize(kv.getValue()));
+            } catch (NBTSerialException serialException) {
+                throw new NBTSerialException(value, NBTTagCompound.class,
+                    stringf("Failed on key %", kv.getKey()), serialException
+                );
+            }
         }
         return tag;
     }

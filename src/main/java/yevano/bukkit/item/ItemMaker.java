@@ -56,7 +56,7 @@ public class ItemMaker {
         return new ItemMaker(amount, material, name, copy, attachments, serial);
     }
 
-    public ItemStack asItemStack() {
+    public ItemStack asItemStack() throws NBTSerialException {
         val itemUtil = ItemUtil.get;
         val itemStack = MutRef.of(new ItemStack(material.orElse(Material.AIR), amount.orElse(1)));
 

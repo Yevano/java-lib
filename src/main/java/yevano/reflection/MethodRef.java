@@ -11,7 +11,7 @@ import lombok.val;
 public class MethodRef<ClassType, ReturnType> {
     protected final ClassRef<ClassType> classRef;
     protected final String name;
-    protected final MethodHandle getterHandle;
+    protected final MethodHandle handle;
     protected final boolean instanceRef;
 
     public static <A, B> MethodRef<A, B> instance(
@@ -70,27 +70,49 @@ public class MethodRef<ClassType, ReturnType> {
         }
     }
 
-    protected MethodRef(ClassRef<ClassType> classRef, MethodHandle getterHandle, String name, boolean instanceRef) {
+    public static <A> MethodRef<A, A> constructor(@NonNull ClassRef<A> holdingClassRef) {
+        Class<A> runtimeClass = holdingClassRef.getRuntimeClass();
+        MethodType methodType = MethodType.methodType(runtimeClass, Object[].class);
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        String name = "<init>";
+
+        try {
+            MethodHandle constructorHandle = lookup.findConstructor(runtimeClass, methodType);
+            return new MethodRef<>(holdingClassRef, constructorHandle, name, false);
+        } catch (IllegalAccessException | NoSuchMethodException e) {
+            throw new RuntimeException(
+                String.format(
+                    "Method lookup for %s.%s threw an exception.",
+                    holdingClassRef.getRuntimeClass().getName(), name
+                ),
+                e
+            );
+        }
+    }
+
+    protected MethodRef(
+        ClassRef<ClassType> classRef, MethodHandle getterHandle, String name, boolean instanceRef
+    ) {
         this.classRef = classRef;
-        this.getterHandle = getterHandle;
+        this.handle = getterHandle;
         this.name = name;
         this.instanceRef = instanceRef;
     }
 
-    public ReturnType call(Object... args) {
+    public ReturnType apply(Object... args) {
         try {
             if(instanceRef) {
                 Object[] actualArgs = Arrays.copyOfRange(args, 1, args.length);
 
                 @SuppressWarnings("unchecked")
-                val result = (ReturnType) getterHandle
+                val result = (ReturnType) handle
                     .bindTo(args[0])
                     .invokeWithArguments(actualArgs)
                 ;
                 return result;
             } else {
                 @SuppressWarnings("unchecked")
-                val result = (ReturnType) getterHandle.invokeWithArguments(args);
+                val result = (ReturnType) handle.invokeWithArguments(args);
                 return result;
             }
         } catch (Throwable e) {

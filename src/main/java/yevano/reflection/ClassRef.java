@@ -1,5 +1,7 @@
 package yevano.reflection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import lombok.NonNull;
@@ -32,7 +34,7 @@ public class ClassRef<ClassType> {
         try {
             @SuppressWarnings("unchecked")
             Class<A> fieldType = (Class<A>) this.getRuntimeClass().getField(fieldName).getType();
-            return FieldRef.instanceField(this, ClassRef.of(fieldType), fieldName);
+            return FieldRef.of(this, ClassRef.of(fieldType), fieldName);
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(
                 String.format(
@@ -42,6 +44,29 @@ public class ClassRef<ClassType> {
                 e
             );
         }
+    }
+
+    public List<FieldRef<ClassType, ?>> getFieldRefs() {
+        val result = new ArrayList<FieldRef<ClassType, ?>>();
+        
+        for(val field : this.getRuntimeClass().getDeclaredFields()) {
+            val fieldName = field.getName();
+
+            try {
+                Class<?> fieldType = this.getRuntimeClass().getField(fieldName).getType();
+                result.add(FieldRef.of(this, ClassRef.of(fieldType), fieldName));
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(
+                    String.format(
+                        "Field lookup on %s.%s threw an exception.",
+                        this.getRuntimeClass().getName(), fieldName
+                    ),
+                    e
+                );
+            }
+        }
+
+        return result;
     }
 
     public Class<ClassType> getRuntimeClass() {
