@@ -25,6 +25,7 @@ import net.minecraft.server.v1_8_R3.NBTTagIntArray;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 import net.minecraft.server.v1_8_R3.NBTTagLong;
 import net.minecraft.server.v1_8_R3.NBTTagShort;
+import net.minecraft.server.v1_8_R3.NBTTagString;
 import yevano.util.Format;
 
 public interface ItemUtil extends NBTSerial<NBTBase, Object>, Format.Context {
@@ -39,6 +40,7 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object>, Format.Context {
         if(tag instanceof NBTTagDouble) return deserialize((NBTTagDouble) tag);
         if(tag instanceof NBTTagByteArray) return deserialize((NBTTagByteArray) tag);
         if(tag instanceof NBTTagIntArray) return deserialize((NBTTagIntArray) tag);
+        if(tag instanceof NBTTagString) return deserialize((NBTTagString) tag);
         if(tag instanceof NBTTagList) return deserialize((NBTTagList) tag);
         if(tag instanceof NBTTagCompound) return deserialize((NBTTagCompound) tag);
 
@@ -75,6 +77,10 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object>, Format.Context {
 
     default int[] deserialize(NBTTagIntArray tag) {
         return tag.c();
+    }
+
+    default String deserialize(NBTTagString tag) throws NBTSerialException {
+        return tag.a_();
     }
 
     default List<?> deserialize(NBTTagList tag) throws NBTSerialException {
@@ -114,6 +120,7 @@ public interface ItemUtil extends NBTSerial<NBTBase, Object>, Format.Context {
         if(value instanceof Double) return serialize((double) value);
         if(value instanceof byte[]) return serialize((byte[]) value);
         if(value instanceof int[]) return serialize((int[]) value);
+        if(value instanceof String) return serialize(((String) value).getBytes());
         if(value instanceof List<?>) return serialize((List<?>) value);
         if(value instanceof Map<?, ?>) return serialize((Map<?, ?>) value);
 
