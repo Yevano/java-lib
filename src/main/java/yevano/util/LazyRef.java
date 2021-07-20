@@ -26,4 +26,9 @@ public class LazyRef<A> extends Ref<A> {
 
         return value.get();
     }
+
+    @Override
+    public String toString() {
+        return get().toString();
+    }
 }

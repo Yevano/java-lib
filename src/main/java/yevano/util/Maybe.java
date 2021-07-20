@@ -115,4 +115,9 @@ public class Maybe<A> {
         if(value == null) return m.value == null;
         return value.equals(m.value);
     }
+
+    @Override
+    public String toString() {
+        return value == null ? "None" : Format.string("Some(%s)", value);
+    }
 }

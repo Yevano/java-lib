@@ -22,4 +22,15 @@ public class Ref<A> {
     public <B> Ref<B> flatMap(Fun<A, Ref<B>> f) {
         return f.apply(value);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Ref) return ((Ref<?>) obj).value.equals(value);
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return Format.string("Ref(%s)", value);
+    }
 }

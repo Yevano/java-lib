@@ -79,6 +79,11 @@ public class Tuple {
             if(!this.t2.equals(rhsTup.t2)) return false;
             return true;
         }
+
+        @Override
+        public String toString() {
+            return Format.string("(%s, %s)", t1, t2);
+        }
     }
 
     public static class Of3<T1, T2, T3> {
@@ -119,6 +124,11 @@ public class Tuple {
             if(!this.t2.equals(rhsTup.t2)) return false;
             if(!this.t3.equals(rhsTup.t3)) return false;
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return Format.string("(%s, %s, %s)", t1, t2, t3);
         }
     }
 
@@ -164,6 +174,11 @@ public class Tuple {
             if(!this.t3.equals(rhsTup.t3)) return false;
             if(!this.t4.equals(rhsTup.t4)) return false;
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return Format.string("(%s, %s, %s, %s)", t1, t2, t3, t4);
         }
     }
 
@@ -213,6 +228,11 @@ public class Tuple {
             if(!this.t4.equals(rhsTup.t4)) return false;
             if(!this.t5.equals(rhsTup.t5)) return false;
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return Format.string("(%s, %s, %s, %s, %s)", t1, t2, t3, t4, t5);
         }
     }
 
@@ -266,6 +286,11 @@ public class Tuple {
             if(!this.t5.equals(rhsTup.t5)) return false;
             if(!this.t6.equals(rhsTup.t6)) return false;
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return Format.string("(%s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6);
         }
     }
 
@@ -323,6 +348,11 @@ public class Tuple {
             if(!this.t6.equals(rhsTup.t6)) return false;
             if(!this.t7.equals(rhsTup.t7)) return false;
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return Format.string("(%s, %s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6, t7);
         }
     }
 
@@ -384,6 +414,13 @@ public class Tuple {
             if(!this.t7.equals(rhsTup.t7)) return false;
             if(!this.t8.equals(rhsTup.t8)) return false;
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return Format.string(
+                "(%s, %s, %s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6, t7, t8
+            );
         }
     }
 }
