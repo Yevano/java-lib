@@ -26,11 +26,17 @@ public class Ref<A> {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Ref) return ((Ref<?>) obj).value.equals(value);
-        return false;
+        return value.equals(obj);
     }
 
     @Override
     public String toString() {
-        return Format.string("Ref(%s)", value);
+        return value.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        if(value == null) return 0;
+        return value.hashCode();
     }
 }

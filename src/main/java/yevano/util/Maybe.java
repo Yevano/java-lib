@@ -5,8 +5,15 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import lombok.NonNull;
+import yevano.util.adt.Higher;
 
-public class Maybe<A> {
+public class Maybe<A> implements Higher<Maybe.K, A> {
+    public static class K { }
+
+    public static <A> Maybe<A> narrowK(Higher<K, A> h) {
+        return (Maybe<A>) h;
+    }
+
     public static final Context context = new Context() { };
 
     public interface Context {

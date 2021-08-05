@@ -1,5 +1,8 @@
 package yevano.util;
 
+import static yevano.util.Maybe.none;
+import static yevano.util.Maybe.some;
+
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -8,23 +11,22 @@ public class LazyRef<A> extends Ref<A> {
         return new LazyRef<>(supplier);
     }
 
-    final Supplier<A> supplier;
-    Optional<A> value;
+    protected final Supplier<A> supplier;
+    protected Maybe<A> value;
 
     LazyRef(Supplier<A> supplier) {
         super(null);
         this.supplier = supplier;
+        this.value = none();
     }
 
     @Override
     public A get() {
-        if(!value.isPresent()) {
+        return value.defaultTo(() -> {
             A computed = supplier.get();
-            this.value = Optional.of(computed);
+            this.value = some(computed);
             return computed;
-        }
-
-        return value.get();
+        });
     }
 
     @Override
