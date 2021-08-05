@@ -1,7 +1,5 @@
 package yevano.util;
 
-import yevano.util.adt.Higher;
-
 public class Union {
     public static <A, T1, T2> Of2<A, T1, T2> union(Class<A> valueClass, A value) {
         return new Union.Of2<>(Pair.of(valueClass, value));
@@ -50,9 +48,7 @@ public class Union {
         return new Union.Of8<>(Pair.of(valueClass, value));
     }
 
-    public static class Of2<A, T1, T2> extends Ref<Pair<Class<A>, A>>
-        implements Higher<Of2.K, Tuple.Of3<A, T1, T2>>
-    {
+    public static class Of2<A, T1, T2> extends Ref<Pair<Class<A>, A>> {
         public static class K { }
 
         Of2(Pair<Class<A>, A> value) {
