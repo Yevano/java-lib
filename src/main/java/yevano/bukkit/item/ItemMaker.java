@@ -14,7 +14,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.val;
-import lombok.var;
 import yevano.util.MutRef;
 import yevano.util.Pair;
 
