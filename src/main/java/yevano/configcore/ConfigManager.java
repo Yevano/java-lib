@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 
 import lombok.Getter;
@@ -223,7 +222,7 @@ public class ConfigManager<T> implements Closeable {
                 val fileWriteInStream = getDefaultConfigInputStream(path).get();
                 val outStream = new FileOutputStream(file);
 
-                IOUtils.copy(fileWriteInStream, outStream);
+                fileWriteInStream.transferTo(outStream);
                 outStream.close();
 
                 logger.info("Default config has been written to file system.");

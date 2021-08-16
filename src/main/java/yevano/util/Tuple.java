@@ -82,7 +82,7 @@ public class Tuple {
 
         @Override
         public String toString() {
-            return Format.string("(%s, %s)", t1, t2);
+            return Format.stringf("(%s, %s)", t1, t2);
         }
     }
 
@@ -128,7 +128,7 @@ public class Tuple {
 
         @Override
         public String toString() {
-            return Format.string("(%s, %s, %s)", t1, t2, t3);
+            return Format.stringf("(%s, %s, %s)", t1, t2, t3);
         }
     }
 
@@ -178,7 +178,7 @@ public class Tuple {
 
         @Override
         public String toString() {
-            return Format.string("(%s, %s, %s, %s)", t1, t2, t3, t4);
+            return Format.stringf("(%s, %s, %s, %s)", t1, t2, t3, t4);
         }
     }
 
@@ -232,7 +232,7 @@ public class Tuple {
 
         @Override
         public String toString() {
-            return Format.string("(%s, %s, %s, %s, %s)", t1, t2, t3, t4, t5);
+            return Format.stringf("(%s, %s, %s, %s, %s)", t1, t2, t3, t4, t5);
         }
     }
 
@@ -290,7 +290,7 @@ public class Tuple {
 
         @Override
         public String toString() {
-            return Format.string("(%s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6);
+            return Format.stringf("(%s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6);
         }
     }
 
@@ -352,7 +352,7 @@ public class Tuple {
 
         @Override
         public String toString() {
-            return Format.string("(%s, %s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6, t7);
+            return Format.stringf("(%s, %s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6, t7);
         }
     }
 
@@ -418,7 +418,7 @@ public class Tuple {
 
         @Override
         public String toString() {
-            return Format.string(
+            return Format.stringf(
                 "(%s, %s, %s, %s, %s, %s, %s, %s)", t1, t2, t3, t4, t5, t6, t7, t8
             );
         }

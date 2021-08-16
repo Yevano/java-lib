@@ -3,7 +3,6 @@ package yevano.util;
 import static yevano.util.Maybe.none;
 import static yevano.util.Maybe.some;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public class LazyRef<A> extends Ref<A> {

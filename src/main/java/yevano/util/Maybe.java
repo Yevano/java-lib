@@ -120,6 +120,6 @@ public class Maybe<A> {
 
     @Override
     public String toString() {
-        return value == null ? "None" : Format.string("Some(%s)", value);
+        return value == null ? "None" : Format.stringf("Some(%s)", value);
     }
 }

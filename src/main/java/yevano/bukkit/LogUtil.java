@@ -20,6 +20,6 @@ public class LogUtil {
     }
 
     public static void logf(String format, Object... args) {
-        log(Format.string(format, args));
+        log(Format.stringf(format, args));
     }
 }
