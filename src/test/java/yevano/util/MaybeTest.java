@@ -24,6 +24,12 @@ public class MaybeTest {
     }
 
     @Test
+    public void defaultTo() {
+        assertEquals(0, Maybe.none().defaultTo(() -> 0));
+        assertEquals(1, Maybe.some(1).defaultTo(() -> 0));
+    }
+
+    @Test
     public void optionalConvert() {
         int value = 0;
         assertEquals(Maybe.fromOptional(Optional.empty()), Maybe.none());
