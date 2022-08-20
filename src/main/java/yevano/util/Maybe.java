@@ -7,28 +7,6 @@ import java.util.function.Supplier;
 import lombok.NonNull;
 
 public class Maybe<A> {
-    public static class K { }
-
-    public static final Context context = new Context() { };
-
-    public interface Context {
-        public default <A> Maybe<A> some(@NonNull A value) {
-            return Maybe.some(value);
-        }
-
-        public default <A> Maybe<A> someUnlessNull(A value) {
-            return Maybe.someUnlessNull(value);
-        }
-
-        public default <A> Maybe<A> none() {
-            return Maybe.none();
-        }
-
-        public default <A> Maybe<A> fromOptional(@NonNull Optional<A> optional) {
-            return Maybe.fromOptional(optional);
-        }
-    }
-
     private static final Maybe<?> NONE = new Maybe<>(null);
 
     @SuppressWarnings("unchecked")
