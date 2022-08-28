@@ -1,6 +1,15 @@
 package yevano.util;
 
+import java.util.function.Consumer;
+
 public class Functions {
+    public static <A> Fun<A, Unit> k(Consumer<A> f) {
+        return x -> {
+            f.accept(x);
+            return Unit.unit;
+        };
+    }
+
     public static <A> A id(A x) { return x; }
 
     public static <A1, A2, B> Fun2<A1, A2, B> roll2(Fun<A1, Fun<A2, B>> f) {
